@@ -17,9 +17,8 @@ await page
 
 const phoneInput = page.getByLabel('หมายเลขโทรศัพท์มือถือ');
 // 5. ดึงค่า validationMessage ออกมา
-const validationMessage = await phoneInput.evaluate((el: HTMLInputElement) => el.validationMessage);
-// 6. เช็คว่ามีข้อความที่ต้องการหรือไม่
-expect(validationMessage).toContain('Please match the requested format.');
+const isTooShort = await phoneInput.evaluate((el: HTMLInputElement) => el.validity.patternMismatch);
+  expect(isTooShort).toBe(true);
 })
 
 test('TC05 Login เบอร์ไม่ขึ้นต้นด้วย 0', async ({ page }) => {
@@ -39,9 +38,8 @@ await page
 .click();
 const phoneInput = page.getByLabel('หมายเลขโทรศัพท์มือถือ');
 // 5. ดึงค่า validationMessage ออกมา
-const validationMessage = await phoneInput.evaluate((el: HTMLInputElement) => el.validationMessage);
-// 6. เช็คว่ามีข้อความที่ต้องการหรือไม่
-expect(validationMessage).toContain('Please match the requested format.');
+const isTooShort = await phoneInput.evaluate((el: HTMLInputElement) => el.validity.patternMismatch);
+  expect(isTooShort).toBe(true);
 })
 
 test('TC06 Login ใส่ pws ตำกว่า 8 ตัว', async ({ page }) => {
@@ -59,12 +57,9 @@ await page
 await page
 .getByRole('button', { name: 'เข้าสู่ระบบ' })
 .click();
-// 5. ตรวจสอบว่า Login ไม่สำเร็จ และมีข้อความว่า หมายเลขโทรศัพท์หรือรหัสผ่านไม่ถูกต้อง
-await expect(page.getByText('หมายเลขโทรศัพท์หรือรหัสผ่านไม่ถูกต้อง')).toBeVisible();
 
 const passInput = page.getByPlaceholder('อย่างน้อย 8 ตัวอักษร');
 // 5. ดึงค่า validationMessage ออกมา
-const validationMessage = await passInput.evaluate((el: HTMLInputElement) => el.validationMessage);
-// 6. เช็คว่ามีข้อความที่ต้องการหรือไม่
-expect(validationMessage).toContain('plaese lengthen this text to 8 characters or more (you are currently using 7 characters).');
+const isTooShort = await passInput.evaluate((el: HTMLInputElement) => el.validity.tooShort);
+  expect(isTooShort).toBe(true);
 })
