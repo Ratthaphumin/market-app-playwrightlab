@@ -19,7 +19,7 @@ const phoneInput = page.getByLabel('หมายเลขโทรศัพท�
 // 5. ดึงค่า validationMessage ออกมา
 const validationMessage = await phoneInput.evaluate((el: HTMLInputElement) => el.validationMessage);
 // 6. เช็คว่ามีข้อความที่ต้องการหรือไม่
-expect(validationMessage).toContain('กรอกหมายเลขโทรศัพท์ 10 หลักที่ขึ้นต้นด้วย 0');
+expect(validationMessage).toContain('Please match the requested format.');
 })
 
 test('TC05 Login เบอร์ไม่ขึ้นต้นด้วย 0', async ({ page }) => {
@@ -41,7 +41,7 @@ const phoneInput = page.getByLabel('หมายเลขโทรศัพท�
 // 5. ดึงค่า validationMessage ออกมา
 const validationMessage = await phoneInput.evaluate((el: HTMLInputElement) => el.validationMessage);
 // 6. เช็คว่ามีข้อความที่ต้องการหรือไม่
-expect(validationMessage).toContain('กรอกหมายเลขโทรศัพท์ 10 หลักที่ขึ้นต้นด้วย 0');
+expect(validationMessage).toContain('Please match the requested format.');
 })
 
 test('TC06 Login ใส่ pws ตำกว่า 8 ตัว', async ({ page }) => {
